@@ -4,13 +4,13 @@
     "importHelpers": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "ES2017",
+    "target": "ES2015",
     "sourceMap": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true
   },
   "include": [
-    "./**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
     "node_modules"

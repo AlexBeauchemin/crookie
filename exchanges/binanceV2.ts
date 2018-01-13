@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
+import includes from 'lodash/includes';
 import { compareArrays, constructMessage, fetchJSON, sendSlackMessage } from '../helpersV2';
 
 const API_URL = 'https://api.binance.com/api/v1/ticker/allPrices';
@@ -24,7 +25,7 @@ function handleData(newData: IData[], latestData: IData[]): string[] {
     diff = diff.replace(new RegExp('ETH' + '$'), '');
     diff = diff.replace(new RegExp('BNB' + '$'), '');
 
-    if (mergedDiffs.includes(diff) === false) mergedDiffs.push(diff);
+    if (!includes(mergedDiffs, diff)) mergedDiffs.push(diff);
   }
 
   return mergedDiffs;
