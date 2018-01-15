@@ -1,5 +1,5 @@
-import get from 'lodash/get';
-import rp from 'request-promise';
+import * as get from 'lodash/get';
+import * as rp from 'request-promise';
 import config from './config';
 
 export function fetchJSON(uri) {

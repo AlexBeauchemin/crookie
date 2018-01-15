@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tslint 'src/**/*.ts' && tsc",
+    "start": "npm run build -- -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

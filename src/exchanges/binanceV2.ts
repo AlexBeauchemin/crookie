@@ -1,6 +1,6 @@
-import get from 'lodash/get';
-import includes from 'lodash/includes';
-import isEmpty from 'lodash/isEmpty';
+import * as get from 'lodash/get';
+import * as includes from 'lodash/includes';
+import * as isEmpty from 'lodash/isEmpty';
 import { compareArrays, constructMessage, fetchJSON, sendSlackMessage } from '../helpersV2';
 
 const API_URL = 'https://api.binance.com/api/v1/ticker/allPrices';
@@ -34,7 +34,7 @@ function handleData(newData: IData[], latestData: IData[]): string[] {
 // Send the slack notification
 async function sendResponse(diffs: string[]): Promise<void> {
   if (isEmpty(diffs)) {
-    console.trace(`Nothing changed on ${EXCHANGE}.`);
+    console.log(`Nothing changed on ${EXCHANGE}.`);
     return;
   }
 
@@ -46,18 +46,28 @@ async function sendResponse(diffs: string[]): Promise<void> {
   console.log(`Slack notification sent successfully for ${EXCHANGE}:`, diffs);
 }
 
-export function init() {
-  let latestData;
+async function fetchData(latestData: IData[]): Promise<IData[]> {
+  try {
+    const data: IData[] = await fetchJSON(API_URL);
+
+    if (!latestData) {
+      latestData = data;
+      return data;
+    }
+
+    const diffs: string[] = handleData(data, latestData);
+
+    await sendResponse(diffs);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function init(): Promise<void> {
+  let latestData: IData[] = await fetchData(null);
 
   setInterval(async () => {
-    try {
-      const data: IData[] = await fetchJSON(API_URL);
-      if (!data) return latestData = data;
-      const diffs: string[] = handleData(data, latestData);
-
-      await sendResponse(diffs);
-    } catch (err) {
-      console.error(err);
-    }
+    latestData = await fetchData(latestData);
   }, INTERVAL);
 }
