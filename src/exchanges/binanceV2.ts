@@ -1,6 +1,6 @@
 import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
 import includes from 'lodash/includes';
+import isEmpty from 'lodash/isEmpty';
 import { compareArrays, constructMessage, fetchJSON, sendSlackMessage } from '../helpersV2';
 
 const API_URL = 'https://api.binance.com/api/v1/ticker/allPrices';

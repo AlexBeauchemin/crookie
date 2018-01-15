@@ -1,5 +1,5 @@
-import rp from 'request-promise';
 import get from 'lodash/get';
+import rp from 'request-promise';
 import config from './config';
 
 export function fetchJSON(uri) {
@@ -7,7 +7,7 @@ export function fetchJSON(uri) {
   return rp(options);
 }
 
-export function compareArrays(arr1, arr2, key){
+export function compareArrays(arr1, arr2, key) {
   const diff = [];
 
   for (const index in arr2) {
@@ -20,7 +20,7 @@ export function compareArrays(arr1, arr2, key){
   return removeDuplicatesFromArray(diff);
 }
 
-export function compareObject(obj1, obj2){
+export function compareObject(obj1, obj2) {
   const diff = [];
 
   for (const property in obj2) {
@@ -32,7 +32,7 @@ export function compareObject(obj1, obj2){
   return removeDuplicatesFromArray(diff);
 }
 
-export async function sendSlackMessage(message){
+export async function sendSlackMessage(message) {
   const options = {
     method: 'POST',
     uri: config.webhookUrl,
@@ -48,12 +48,12 @@ export async function sendSlackMessage(message){
   }
 }
 
-export function randomItem(items){
-  return items[Math.floor(Math.random()*items.length)];
+export function randomItem(items) {
+  return items[Math.floor(Math.random() * items.length)];
 }
 
-export function removeDuplicatesFromArray(array){
-  return array.filter(function(item, pos) {
+export function removeDuplicatesFromArray(array) {
+  return array.filter((item, pos) => {
     return array.indexOf(item) === pos;
   });
 }
