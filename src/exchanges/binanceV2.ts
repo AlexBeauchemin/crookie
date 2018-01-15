@@ -47,27 +47,24 @@ async function sendResponse(diffs: string[]): Promise<void> {
 }
 
 async function fetchData(latestData: IData[]): Promise<IData[]> {
-  try {
-    const data: IData[] = await fetchJSON(API_URL);
+  const data: IData[] = await fetchJSON(API_URL);
 
-    if (!latestData) {
-      latestData = data;
-      return data;
-    }
+  if (!latestData) return latestData = data;
 
-    const diffs: string[] = handleData(data, latestData);
+  const diffs: string[] = handleData(data, latestData);
 
-    await sendResponse(diffs);
-    return data;
-  } catch (err) {
-    console.error(err);
-  }
+  await sendResponse(diffs);
+  return data;
 }
 
 export async function init(): Promise<void> {
-  let latestData: IData[] = await fetchData(null);
+  try {
+    let latestData: IData[] = await fetchData(null);
 
-  setInterval(async () => {
-    latestData = await fetchData(latestData);
-  }, INTERVAL);
+    setInterval(async () => {
+      latestData = await fetchData(latestData);
+    }, INTERVAL);
+  } catch (err) {
+    console.error(err);
+  }
 }
