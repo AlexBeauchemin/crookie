@@ -1,6 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
+    "outDir": "./dist",
     "importHelpers": true,
     "module": "commonjs",
     "moduleResolution": "node",
